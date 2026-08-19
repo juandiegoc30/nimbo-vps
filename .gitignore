@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# Dependencias y artefactos generados
+node_modules/
+dist/
+playwright-report/
+test-results/
+
+# Notas internas de sesiones y auditorías de trabajo
+docs/HANDOFF*.md
+docs/auditoria.md
