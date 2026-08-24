@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Nimbo guía tu proyecto y prepara una solicitud de infraestructura lista para enviar." />
+  <meta name="theme-color" content="#101d2c" />
+  <meta name="robots" content="noindex" />
+  <title>Calculadora - Nimbo VPS</title>
+  <link rel="icon" href="./assets/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" sizes="180x180" />
+  <link rel="stylesheet" href="./assets/vendor/tabler-icons/tabler-icons.min.css" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+
+<body class="app">
+  <a class="skip-link" href="#canvas">Ir a las preguntas</a>
+
+  <!-- ================= Barra superior ================= -->
+  <header class="app-bar no-print">
+    <a class="brand" href="./index.html" aria-label="Nimbo VPS, volver al inicio">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="./assets/brand/nimbo-mark-128.png" width="30" height="30" alt="" />
+      </span>
+      <span><strong>Nimbo</strong> VPS</span>
+    </a>
+
+    <div id="barProgress" class="bar-progress">
+      <p><span>Etapa <b id="stepCurrent">1</b> de <span id="stepTotal">7</span></span> <span id="stepTitle">Proyecto</span></p>
+      <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+    </div>
+
+    <div class="bar-actions">
+      <button id="btnReset" class="btn btn-on-navy" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v6h6M20 20v-6h-6M5.1 15A8 8 0 0 0 18 18l2-2M18.9 9A8 8 0 0 0 6 6L4 8"/></svg>
+        Reiniciar
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== Pista de pasos: progreso, navegacion y respuestas ========== -->
+  <nav id="stepper" class="track no-print" aria-label="Pasos"></nav>
+
+  <!-- ================= Lienzo ================= -->
+  <main id="canvas" class="canvas" tabindex="-1">
+    <div class="canvas-inner" id="canvasInner">
+
+      <!-- ---------- 1. Proyecto ---------- -->
+      <fieldset class="step" data-section="1" data-title="Proyecto">
+        <legend class="sr-only">Paso 1 de 7: datos del proyecto</legend>
+
+        <div class="step-head">
+          <h1>Empecemos por el proyecto</h1>
+          <p>Tres datos. Van en el encabezado de la carta que se genera al final.</p>
+        </div>
+
+        <div class="group">
+          <label class="field">
+            <span class="field-label">Nombre de la aplicación <span class="field-req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></span>
+            <input id="applicationName" class="input" type="text" maxlength="80" required autocomplete="off"
+                   placeholder="Portal de servicios estudiantiles" />
+            <span class="field-hint">El sistema que se va a alojar en el servidor.</span>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Nombre del proyecto <span class="field-req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></span>
+            <input id="projectName" class="input" type="text" maxlength="100" required autocomplete="off"
+                   placeholder="Transformación digital 2026" />
+            <span class="field-hint">La iniciativa institucional a la que pertenece.</span>
+          </label>
+
+          <label class="field">
+            <span class="field-label">¿Qué problema resuelve? <span class="field-req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></span>
+            <textarea id="projectPurpose" class="textarea" rows="4" maxlength="360" required
+                      placeholder="Centralizar las solicitudes de certificados que hoy se tramitan en ventanilla."></textarea>
+            <span class="field-foot">
+              <span class="field-hint">Una o dos frases bastan.</span>
+              <span class="field-count" id="purposeCount">0 / 360</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 2. Personas ---------- -->
+      <fieldset class="step" data-section="2" data-title="Personas" hidden>
+        <legend class="sr-only">Paso 2 de 7: personas y uso</legend>
+
+        <div class="step-head">
+          <h1>¿Cuánta gente la va a usar?</h1>
+          <p>Cálculos aproximados. Puedes cambiarlos cuando quieras.</p>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-total">Personas que tendrán una cuenta</h2>
+            <p>El total de usuarios registrados, aunque no entren todos los días.</p>
+          </div>
+          <div class="choices" data-choice="totalUsers" role="radiogroup" aria-labelledby="g-total">
+            <label class="choice"><input type="radio" name="r-totalUsers" value="40" data-min="1" data-max="50" data-label="Hasta 50 personas" />
+              <span class="choice-body"><span><span class="choice-title">Hasta 50</span><span class="choice-note">Un equipo o una oficina</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-totalUsers" value="200" data-min="51" data-max="300" data-label="Entre 50 y 300 personas" />
+              <span class="choice-body"><span><span class="choice-title">50 a 300</span><span class="choice-note">Una dependencia o un programa</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-totalUsers" value="600" data-min="301" data-max="1000" data-label="Entre 300 y 1.000 personas" />
+              <span class="choice-body"><span><span class="choice-title">300 a 1.000</span><span class="choice-note">Varias dependencias</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-totalUsers" value="2500" data-min="1001" data-max="1000000" data-label="Más de 1.000 personas" />
+              <span class="choice-body"><span><span class="choice-title">Más de 1.000</span><span class="choice-note">Toda la institución</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+          <div class="stepper-input">
+            <button class="step-btn" type="button" data-nudge="totalUsers" data-by="-50" aria-label="Restar 50 personas con cuenta">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+            </button>
+            <input id="totalUsers" class="input" type="number" value="300" min="1" max="1000000" step="10" inputmode="numeric"
+                   aria-label="Número exacto de personas con cuenta" />
+            <button class="step-btn" type="button" data-nudge="totalUsers" data-by="50" aria-label="Sumar 50 personas con cuenta">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <span class="stepper-unit">o escribe la cifra exacta</span>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-sim">Personas conectadas al mismo tiempo</h2>
+            <p>El momento más ocupado del día. Es el dato que más pesa en el cálculo.</p>
+          </div>
+          <div class="choices" data-choice="simultaneousUsers" role="radiogroup" aria-labelledby="g-sim">
+            <label class="choice"><input type="radio" name="r-sim" value="6" data-min="1" data-max="10" data-label="Hasta 10 a la vez" />
+              <span class="choice-body"><span><span class="choice-title">Hasta 10</span><span class="choice-note">Uso tranquilo y disperso</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-sim" value="20" data-min="11" data-max="30" data-label="Entre 10 y 30 a la vez" />
+              <span class="choice-body"><span><span class="choice-title">10 a 30</span><span class="choice-note">Picos en horario laboral</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-sim" value="50" data-min="31" data-max="80" data-label="Entre 30 y 80 a la vez" />
+              <span class="choice-body"><span><span class="choice-title">30 a 80</span><span class="choice-note">Jornadas de alta demanda</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-sim" value="150" data-min="81" data-max="100000" data-label="Más de 80 a la vez" />
+              <span class="choice-body"><span><span class="choice-title">Más de 80</span><span class="choice-note">Inscripciones o convocatorias</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+          <div class="stepper-input">
+            <button class="step-btn" type="button" data-nudge="simultaneousUsers" data-by="-5" aria-label="Restar 5 personas conectadas">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+            </button>
+            <input id="simultaneousUsers" class="input" type="number" value="15" min="1" max="100000" step="5" inputmode="numeric"
+                   aria-label="Número exacto de personas conectadas al mismo tiempo" />
+            <button class="step-btn" type="button" data-nudge="simultaneousUsers" data-by="5" aria-label="Sumar 5 personas conectadas">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <span class="stepper-unit">o escribe la cifra exacta</span>
+          </div>
+          <p id="usersWarning" class="notice" role="status" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+            <span>Hay más personas conectadas a la vez que cuentas en total. Revisa los dos números.</span>
+          </p>
+        </div>
+
+      </fieldset>
+
+      <!-- ---------- 2b. Frecuencia ---------- -->
+      <fieldset class="step" data-section="2" data-title="Personas" hidden>
+        <legend class="sr-only">Personas y uso: frecuencia</legend>
+        <div class="step-head">
+          <h1>¿Con qué frecuencia la usan?</h1>
+          <p>Marca el patrón que más se parezca al día a día.</p>
+        </div>
+
+        <div class="group">
+          <input type="hidden" id="usageIntensity" value="1.25" />
+          <div class="choices" data-choice="usageIntensity" role="radiogroup" aria-label="Frecuencia de uso">
+            <label class="choice"><input type="radio" name="r-int" value="1" data-label="Uso ocasional" />
+              <span class="choice-body"><span><span class="choice-title">De vez en cuando</span><span class="choice-note">Entran a consultar algo puntual</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-int" value="1.25" data-label="Uso normal" />
+              <span class="choice-body"><span><span class="choice-title">A diario, un rato</span><span class="choice-note">Consultan, registran y sacan reportes</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-int" value="1.6" data-label="Uso continuo" />
+              <span class="choice-body"><span><span class="choice-title">Toda la jornada</span><span class="choice-note">Es su herramienta principal de trabajo</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-int" value="2" data-label="Uso intensivo" />
+              <span class="choice-body"><span><span class="choice-title">Sin parar</span><span class="choice-note">Operación crítica, atención al público</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 3. Funciones ---------- -->
+      <fieldset class="step" data-section="3" data-title="Funciones" hidden>
+        <legend class="sr-only">Paso 3 de 7: funciones del sistema</legend>
+
+        <div class="step-head">
+          <h1>¿Qué va a poder hacer?</h1>
+          <p>Enciende solo lo que tendrá la aplicación. Cada función consume recursos del servidor.</p>
+        </div>
+
+        <div class="group">
+          <div class="switches">
+            <label class="switch"><input type="checkbox" id="featureAuth" checked />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-user-check"></i></span>
+              <span class="switch-copy"><span class="switch-title">Cuentas y permisos</span><span class="switch-note">Cada persona entra con su usuario y ve lo que le corresponde.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureCrud" checked />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-clipboard-list"></i></span>
+              <span class="switch-copy"><span class="switch-title">Formularios y registros</span><span class="switch-note">Llenar datos, guardarlos y volver a consultarlos.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureReports" checked />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-chart-bar"></i></span>
+              <span class="switch-copy"><span class="switch-title">Reportes y estadísticas</span><span class="switch-note">Tablas y gráficas que resumen la información.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureFiles" checked />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-file-upload"></i></span>
+              <span class="switch-copy"><span class="switch-title">Subir documentos</span><span class="switch-note">Adjuntar archivos, fotos o escaneos.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featurePdf" checked />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-file-type-pdf"></i></span>
+              <span class="switch-copy"><span class="switch-title">Generar PDF</span><span class="switch-note">Certificados, constancias o comprobantes descargables.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureNotifications" />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-mail"></i></span>
+              <span class="switch-copy"><span class="switch-title">Avisos por correo</span><span class="switch-note">Notificaciones y recordatorios automáticos.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureApi" />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-arrows-exchange"></i></span>
+              <span class="switch-copy"><span class="switch-title">Conexión con otros sistemas</span><span class="switch-note">Intercambia datos con plataformas ya existentes.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+            <label class="switch"><input type="checkbox" id="featureBackground" />
+              <span class="switch-body"><span class="switch-icon" aria-hidden="true"><i class="ti ti-clock-cog"></i></span>
+              <span class="switch-copy"><span class="switch-title">Procesos automáticos</span><span class="switch-note">Tareas que corren solas de noche o a cierta hora.</span></span>
+              <span class="switch-track" aria-hidden="true"></span></span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 4. Información ---------- -->
+      <fieldset class="step" data-section="4" data-title="Información" hidden>
+        <legend class="sr-only">Paso 4 de 7: información y archivos</legend>
+
+        <div class="step-head">
+          <h1>¿Cuánta información va a guardar?</h1>
+          <p>Esto define el tamaño del disco. Con una idea aproximada es suficiente.</p>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-data">Cantidad de registros</h2>
+            <p>Solicitudes, inscripciones, fichas: cada fila que se guarda.</p>
+          </div>
+          <input type="hidden" id="dataVolume" value="5" />
+          <div class="choices" data-choice="dataVolume" role="radiogroup" aria-labelledby="g-data">
+            <label class="choice"><input type="radio" name="r-data" value="2" data-label="Cientos de registros" />
+              <span class="choice-body"><span><span class="choice-title">Cientos</span><span class="choice-note">Un listado que cabe en una hoja de cálculo</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-data" value="5" data-label="Miles de registros" />
+              <span class="choice-body"><span><span class="choice-title">Miles</span><span class="choice-note">Un año de operación normal</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-data" value="15" data-label="Cientos de miles de registros" />
+              <span class="choice-body"><span><span class="choice-title">Cientos de miles</span><span class="choice-note">Varios años o mucho movimiento</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-data" value="40" data-label="Millones de registros" />
+              <span class="choice-body"><span><span class="choice-title">Millones</span><span class="choice-note">Histórico completo o datos de sensores</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-files">Cantidad de archivos</h2>
+            <p>Documentos que las personas suben al sistema.</p>
+          </div>
+          <input type="hidden" id="fileVolume" value="50" />
+          <div class="choices" data-choice="fileVolume" role="radiogroup" aria-labelledby="g-files">
+            <label class="choice"><input type="radio" name="r-files" value="5" data-label="Sin adjuntos" />
+              <span class="choice-body"><span><span class="choice-title">Sin adjuntos</span><span class="choice-note">La aplicación solo guarda datos</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-files" value="20" data-label="Archivos ocasionales" />
+              <span class="choice-body"><span><span class="choice-title">Ocasionales</span><span class="choice-note">Un archivo en algunos registros</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-files" value="50" data-label="Archivos habituales" />
+              <span class="choice-body"><span><span class="choice-title">Habituales</span><span class="choice-note">La mayoría tiene uno o dos archivos</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-files" value="120" data-label="Uso intensivo de archivos" />
+              <span class="choice-body"><span><span class="choice-title">Intensivos</span><span class="choice-note">Cada registro reúne varios documentos</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <!-- ---------- 4b. Peso y conservacion ---------- -->
+      <fieldset class="step" data-section="4" data-title="Información" hidden>
+        <legend class="sr-only">Información: peso de los archivos y conservación</legend>
+        <div class="step-head">
+          <h1>¿Cómo son esos archivos?</h1>
+          <p>El peso y el tiempo que hay que guardarlos definen el disco.</p>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-weight">Peso de esos archivos</h2>
+            <p>Piensa en el archivo más común, no en el más grande.</p>
+          </div>
+          <input type="hidden" id="fileWeight" value="1" />
+          <div class="choices" data-choice="fileWeight" role="radiogroup" aria-label="Peso de los archivos">
+            <label class="choice"><input type="radio" name="r-weight" value="1" data-label="Hasta 5 MB" />
+              <span class="choice-body"><span><span class="choice-title">Hasta 5 MB</span><span class="choice-note">PDF y documentos de texto</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-weight" value="1.3" data-label="De 5 a 25 MB" />
+              <span class="choice-body"><span><span class="choice-title">5 a 25 MB</span><span class="choice-note">Fotos, formularios o escaneos</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-weight" value="1.8" data-label="De 25 a 100 MB" />
+              <span class="choice-body"><span><span class="choice-title">25 a 100 MB</span><span class="choice-note">Planos o imágenes de alta resolución</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-weight" value="2.4" data-label="Más de 100 MB" />
+              <span class="choice-body"><span><span class="choice-title">Más de 100 MB</span><span class="choice-note">Video o archivos técnicos grandes</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-ret">¿Cuánto tiempo hay que conservarlos?</h2>
+            <p>Muchas entidades exigen guardar los registros varios años.</p>
+          </div>
+          <input type="hidden" id="retentionYears" value="5" />
+          <div class="choices" data-choice="retentionYears" role="radiogroup" aria-label="Tiempo de conservación">
+            <label class="choice"><input type="radio" name="r-ret" value="1" data-label="1 año" />
+              <span class="choice-body"><span><span class="choice-title">1 año</span><span class="choice-note">Solo el periodo vigente</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-ret" value="3" data-label="3 años" />
+              <span class="choice-body"><span><span class="choice-title">3 años</span><span class="choice-note">Retención corta</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-ret" value="5" data-label="5 años" />
+              <span class="choice-body"><span><span class="choice-title">5 años</span><span class="choice-note">Lo más habitual en el sector público</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-ret" value="8" data-label="8 años o más" />
+              <span class="choice-body"><span><span class="choice-title">8 años o más</span><span class="choice-note">Retención larga o archivo histórico</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 5. Continuidad ---------- -->
+      <fieldset class="step" data-section="5" data-title="Continuidad" hidden>
+        <legend class="sr-only">Paso 5 de 7: crecimiento y continuidad</legend>
+
+        <div class="step-head">
+          <h1>Última pregunta: el futuro</h1>
+          <p>Cuánto margen dejar para que la configuración no se quede corta en un año.</p>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-growth">¿Cómo esperas que crezca?</h2>
+          </div>
+          <input type="hidden" id="growthLevel" value="1.25" />
+          <div class="choices" data-choice="growthLevel" role="radiogroup" aria-labelledby="g-growth">
+            <label class="choice"><input type="radio" name="r-growth" value="1.1" data-label="Crecimiento bajo" />
+              <span class="choice-body"><span><span class="choice-title">Se queda igual</span><span class="choice-note">El público ya está definido</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-growth" value="1.25" data-label="Crecimiento moderado" />
+              <span class="choice-body"><span><span class="choice-title">Crece cada año</span><span class="choice-note">Se van sumando usuarios poco a poco</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-growth" value="1.5" data-label="Crecimiento alto" />
+              <span class="choice-body"><span><span class="choice-title">Llegará a más áreas</span><span class="choice-note">Hay plan de expandirlo</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-growth" value="2" data-label="Podría duplicarse" />
+              <span class="choice-body"><span><span class="choice-title">Podría duplicarse</span><span class="choice-note">Se abrirá al público general</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-avail">¿Qué pasa si el sistema se cae una hora?</h2>
+          </div>
+          <input type="hidden" id="availability" value="1.15" />
+          <div class="choices" data-choice="availability" role="radiogroup" aria-labelledby="g-avail">
+            <label class="choice"><input type="radio" name="r-avail" value="1" data-label="Tolera interrupciones" />
+              <span class="choice-body"><span><span class="choice-title">No pasa gran cosa</span><span class="choice-note">Se puede trabajar más tarde</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-avail" value="1.15" data-label="Debe estar en jornada" />
+              <span class="choice-body"><span><span class="choice-title">Estorba bastante</span><span class="choice-note">Debe estar arriba en horario laboral</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-avail" value="1.3" data-label="Disponibilidad crítica" />
+              <span class="choice-body"><span><span class="choice-title">Es un problema serio</span><span class="choice-note">Hay ciudadanos o pagos de por medio</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <!-- ---------- 5b. Respaldos y margen ---------- -->
+      <fieldset class="step" data-section="5" data-title="Continuidad" hidden>
+        <legend class="sr-only">Continuidad: respaldos y margen</legend>
+        <div class="step-head">
+          <h1>Respaldos y margen</h1>
+          <p>Cuánta información se aceptaría perder y cuánta reserva dejar.</p>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-backup">¿Cada cuánto hay que respaldar?</h2>
+            <p>Marca cuánta información se aceptaría perder en el peor caso.</p>
+          </div>
+          <input type="hidden" id="backupFrequency" value="1.1" />
+          <div class="choices" data-choice="backupFrequency" role="radiogroup" aria-label="Frecuencia de respaldo">
+            <label class="choice"><input type="radio" name="r-backup" value="1" data-label="Respaldo semanal" />
+              <span class="choice-body"><span><span class="choice-title">Cada semana</span><span class="choice-note">Se aceptaría perder hasta una semana</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-backup" value="1.1" data-label="Respaldo diario" />
+              <span class="choice-body"><span><span class="choice-title">Cada día</span><span class="choice-note">Se aceptaría perder un día de trabajo</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-backup" value="1.2" data-label="Varios respaldos al día" />
+              <span class="choice-body"><span><span class="choice-title">Varias veces al día</span><span class="choice-note">Se aceptaría perder unas horas</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <h2 id="g-head">Margen de reserva</h2>
+            <p>Capacidad extra para picos imprevistos.</p>
+          </div>
+          <input type="hidden" id="headroom" value="1.2" />
+          <div class="choices" data-choice="headroom" role="radiogroup" aria-label="Margen de reserva">
+            <label class="choice"><input type="radio" name="r-head" value="1" data-label="Sin margen" />
+              <span class="choice-body"><span><span class="choice-title">Ajustado</span><span class="choice-note">Sin capacidad extra, se dimensiona al uso previsto</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-head" value="1.2" data-label="Margen razonable" />
+              <span class="choice-body"><span><span class="choice-title">Razonable</span><span class="choice-note">Algo de holgura para picos normales</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+            <label class="choice"><input type="radio" name="r-head" value="1.4" data-label="Margen amplio" />
+              <span class="choice-body"><span><span class="choice-title">Amplio</span><span class="choice-note">Holgura para imprevistos y crecimiento rápido</span></span>
+              <span class="choice-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span></span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 6. Resultado ---------- -->
+      <fieldset class="step" data-section="6" data-title="Resultado" hidden>
+        <legend class="sr-only">Paso 6 de 7: resultado y solicitud</legend>
+
+        <div class="step-head">
+          <h1>Esto es lo que necesitas pedir</h1>
+          <p>Esta es la configuración que sale de tus respuestas. Revísala y continúa.</p>
+        </div>
+
+        <div class="result-grid">
+          <div class="spec-shell">
+            <div class="spec">
+              <div class="spec-head">
+                <h2 id="recommendedTitle">Servidor equilibrado</h2>
+                <p id="recommendationText">Configuración equilibrada para una solución institucional.</p>
+              </div>
+              <div class="spec-metrics">
+                <div><span>Procesador</span><strong id="cpuResult">4</strong><small>vCPU</small></div>
+                <div><span>Memoria</span><strong id="ramResult">8</strong><small>GB RAM</small></div>
+                <div><span>Disco</span><strong id="storageResult">200</strong><small>GB NVMe</small></div>
+                <div><span>Red</span><strong id="bandwidthResult">1</strong><small>TB / mes</small></div>
+              </div>
+              <div class="spec-list">
+                <div class="spec-item"><span class="spec-label">Sistema operativo</span><strong>Ubuntu Server 22.04 LTS</strong></div>
+                <div class="spec-item"><span class="spec-label">Base de datos</span><strong>PostgreSQL</strong></div>
+                <div class="spec-item"><span class="spec-label">Dirección pública</span><strong>1 IPv4 fija</strong></div>
+                <div class="spec-item"><span class="spec-label">Seguridad</span><strong>TLS y firewall</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-side">
+            <section class="panel result-summary" aria-labelledby="summaryTitle">
+              <div class="panel-head">
+                <div>
+                  <h2 id="summaryTitle">Tu escenario, en un vistazo</h2>
+                  <p>Lo que elegiste y cómo influye en la recomendación.</p>
+                </div>
+              </div>
+              <dl id="recap" class="recap"></dl>
+            </section>
+          </div>
+        </div>
+
+        <p id="shortRequest" class="sr-only" role="status">VPS con 4 vCPU, 8 GB RAM y 200 GB NVMe.</p>
+      </fieldset>
+
+      <fieldset class="step step-result-detail" data-section="6" data-title="Resultado" hidden>
+        <legend class="sr-only">Paso 6 de 7: comparación de escenarios</legend>
+
+        <div class="step-head">
+          <h1>Compara antes de continuar</h1>
+          <p>Contrasta la recomendación con una alternativa mínima y otra preparada para crecer.</p>
+        </div>
+
+        <div class="result-detail result-comparison">
+          <section class="panel comparison-panel" aria-labelledby="comparisonTitle">
+            <div class="panel-head">
+              <h2 id="comparisonTitle">Tres escenarios</h2>
+            </div>
+            <div id="scenarioTable" class="scenario-grid" role="list" aria-label="Comparación de recursos por escenario"></div>
+          </section>
+        </div>
+      </fieldset>
+
+      <!-- ---------- 7. La carta ---------- -->
+      <fieldset class="step step-letter step-letter-form" data-section="7" data-title="La carta" hidden>
+        <legend class="sr-only">Paso 7 de 7: datos de la carta</legend>
+
+        <div class="step-head">
+          <h1>Completa los datos de la carta</h1>
+          <p>Define quién la recibe y quién la solicita. La vista final se prepara en el siguiente paso.</p>
+        </div>
+
+        <div class="letter-form-layout no-print">
+          <div class="panel letter-tools">
+            <div class="panel-head">
+              <h2>Datos de la solicitud</h2>
+              <span id="requestStatus" class="badge badge-wait">Faltan datos del proyecto</span>
+            </div>
+            <div class="recipients">
+              <label class="field"><span class="field-label">Destinatario</span>
+                <input id="recipientName" class="input" type="text" maxlength="100" autocomplete="off" placeholder="Nombre completo" /></label>
+              <label class="field"><span class="field-label">Cargo o dependencia</span>
+                <input id="recipientRole" class="input" type="text" maxlength="120" autocomplete="off" value="Área de Infraestructura Tecnológica" /></label>
+              <label class="field"><span class="field-label">Quién solicita</span>
+                <input id="requesterName" class="input" type="text" maxlength="100" autocomplete="off" placeholder="Nombre y cargo" /></label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="step step-letter step-letter-preview" data-section="7" data-title="La carta" hidden>
+        <legend class="sr-only">Paso 7 de 7: vista previa de la carta</legend>
+
+        <div class="step-head">
+          <h1>Tu solicitud está lista</h1>
+          <p>Revísala y elige cómo llevarla al área de infraestructura.</p>
+        </div>
+
+        <div class="letter-preview-layout letter-final-grid">
+          <section class="panel letter-action-card no-print" aria-labelledby="deliveryTitle">
+            <div class="letter-action-visual" aria-label="Nimbo presenta la recomendación final">
+              <p id="nimboFinalRecommendation" class="nimbo-final-speech">Recomiendo 4 vCPU, 8 GB RAM y 200 GB NVMe.</p>
+              <span class="nimbo-card-character" role="img">
+                <img class="nimbo-card-animation" src="./assets/images/nimbo-celebrating.gif" width="720" height="820" alt="" />
+                <img class="nimbo-card-static" src="./assets/images/nimbo-proud.webp" width="1199" height="1312" alt="" />
+              </span>
+            </div>
+            <div class="letter-toolbar-copy">
+              <span class="eyebrow">Entrega</span>
+              <h2 id="deliveryTitle">Llévate la solicitud</h2>
+              <p>Ya incluye la configuración calculada y los datos de tu proyecto.</p>
+            </div>
+            <div class="actions">
+              <button id="btnCopy" class="btn btn-secondary" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copiar la carta
+              </button>
+              <button id="btnPrint" class="btn btn-secondary" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+                Imprimir o guardar PDF
+              </button>
+            </div>
+            <p id="actionFeedback" class="feedback" role="status"></p>
+          </section>
+
+          <section class="letter-preview-card" aria-labelledby="previewTitle">
+            <div class="letter-preview-head no-print">
+              <div><span class="eyebrow">Vista previa</span><h2 id="previewTitle">Así se verá la carta</h2></div>
+              <span class="preview-scale">Vista 70%</span>
+            </div>
+            <div class="letter-mini-viewport">
+            <article class="letter" aria-label="Vista previa de la solicitud">
+              <pre id="specification"></pre>
+              <div class="letter-foot"><span>Nimbo VPS</span><span>Revisar antes de enviar</span></div>
+            </article>
+            </div>
+          </section>
+        </div>
+      </fieldset>
+
+      <p id="projectCompleteness" class="sr-only" role="status"><span id="projectCount">0 de 3 datos</span></p>
+    </div>
+
+    <section id="completionScreen" class="completion-screen no-print" aria-labelledby="completionTitle" hidden>
+      <div class="completion-card">
+        <div class="completion-visual" aria-hidden="true">
+          <span class="completion-seal"><i class="ti ti-check"></i></span>
+          <img class="completion-nimbo nimbo-motion" src="./assets/images/nimbo-celebrating.gif" width="720" height="820" alt="" />
+          <img class="completion-nimbo nimbo-still" src="./assets/images/nimbo-celebrating.webp" width="720" height="820" alt="" />
+          <span class="completion-spark completion-spark-one">✦</span>
+          <span class="completion-spark completion-spark-two">✧</span>
+        </div>
+
+        <div class="completion-copy">
+          <span class="eyebrow">Proceso terminado</span>
+          <h1 id="completionTitle" tabindex="-1">Solicitud finalizada</h1>
+          <p class="completion-lead">El cálculo quedó cerrado. La carta está lista para compartir con el área de infraestructura.</p>
+
+          <dl class="completion-summary" aria-label="Resumen final">
+            <div><dt>Aplicación</dt><dd id="completionProject">Proyecto sin nombre</dd></div>
+            <div><dt>Configuración cerrada</dt><dd id="completionConfig">4 vCPU - 8 GB RAM - 200 GB NVMe</dd></div>
+          </dl>
+
+          <div class="completion-actions" aria-label="Opciones de entrega">
+            <button id="btnCompleteCopy" class="btn btn-secondary" type="button"><i class="ti ti-copy" aria-hidden="true"></i>Copiar carta</button>
+            <button id="btnCompletePrint" class="btn btn-secondary" type="button"><i class="ti ti-printer" aria-hidden="true"></i>Imprimir o guardar PDF</button>
+          </div>
+          <p id="completionFeedback" class="feedback" role="status"></p>
+
+          <div class="completion-restart">
+            <div>
+              <strong>¿Necesitas calcular otro proyecto?</strong>
+              <span>Esta solicitud ya no se puede modificar. Recarga la aplicación para empezar desde cero.</span>
+            </div>
+            <button id="btnReload" class="btn btn-primary" type="button"><i class="ti ti-refresh" aria-hidden="true"></i>Recargar y empezar de nuevo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="nimboGuide" class="nimbo-guide no-print" data-pose="guide" data-side="right" aria-atomic="true">
+      <div class="nimbo-bubble">
+        <div class="nimbo-bubble-head"><strong>Nimbo</strong><span id="nimboTipCount">3 consejos disponibles</span></div>
+        <span id="nimboMessage" role="status" aria-live="polite"></span>
+        <button id="btnNimboTip" class="nimbo-tip-button" type="button">Otro consejo</button>
+      </div>
+      <button id="nimboActor" class="nimbo-actor" type="button" aria-label="Pedirle otro consejo a Nimbo">
+        <span class="nimbo-character" aria-hidden="true">
+          <img class="nimbo-animation" src="./assets/images/nimbo-alive.gif" width="720" height="820" alt="" />
+          <img class="nimbo-static" src="./assets/images/nimbo-guide.webp" width="1184" height="1328" alt="" />
+        </span>
+      </button>
+    </aside>
+  </main>
+
+  <!-- ================= Dock de acciones ================= -->
+  <footer id="wizardDock" class="dock no-print">
+    <div class="dock-inner">
+      <div id="readout" class="readout" hidden>
+        <span class="readout-label">Servidor estimado</span>
+        <div class="readout-values" aria-hidden="true">
+          <div><b id="liveCpu">4</b><span>vCPU</span></div>
+          <div><b id="liveRam">8</b><span>GB</span></div>
+          <div><b id="liveDisk">200</b><span>GB disco</span></div>
+        </div>
+      </div>
+
+      <p id="stepError" class="step-error" role="alert"></p>
+
+      <div class="dock-nav">
+        <button id="btnPrev" class="btn btn-quiet" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Atrás
+        </button>
+        <button id="btnFinish" class="btn btn-primary" type="button" hidden>
+          <i class="ti ti-lock-check" aria-hidden="true"></i>
+          Finalizar solicitud
+        </button>
+        <button id="btnNext" class="btn btn-primary" type="button">
+          <span id="btnNextLabel">Siguiente</span>
+          <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="finishDialog" class="finish-dialog" aria-labelledby="finishDialogTitle" aria-describedby="finishDialogDescription">
+    <div class="finish-dialog-icon" aria-hidden="true"><i class="ti ti-lock-check"></i></div>
+    <h2 id="finishDialogTitle">¿Finalizar la solicitud?</h2>
+    <p id="finishDialogDescription">Las respuestas quedarán bloqueadas y no podrás volver a los pasos anteriores. Aún podrás copiar la carta o imprimirla y guardarla como PDF.</p>
+    <div class="finish-dialog-actions">
+      <button id="btnCancelFinish" class="btn btn-secondary" type="button">Seguir revisando</button>
+      <button id="btnConfirmFinish" class="btn btn-primary" type="button">Sí, finalizar</button>
+    </div>
+  </dialog>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
