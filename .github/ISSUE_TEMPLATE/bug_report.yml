@@ -1,0 +1,39 @@
+name: Reportar un error
+description: Informa un comportamiento incorrecto o una regresión visual.
+title: "fix: "
+labels: [bug]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qué ocurrió
+      description: Explica el resultado observado y por qué es un problema.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Cómo reproducirlo
+      placeholder: |
+        1. Abrir…
+        2. Elegir…
+        3. Observar…
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador y dispositivo
+      placeholder: Safari 18, macOS; Chrome 140, Android…
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Capturas o información adicional

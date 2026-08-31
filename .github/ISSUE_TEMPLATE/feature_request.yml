@@ -1,0 +1,34 @@
+name: Proponer una mejora
+description: Sugiere una mejora de producto, accesibilidad o documentación.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: necesidad
+    attributes:
+      label: Necesidad de la persona usuaria
+      description: Describe el problema antes de proponer la solución.
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+  - type: dropdown
+    id: alcance
+    attributes:
+      label: Área
+      options:
+        - Calculadora
+        - Carta y exportación
+        - Landing
+        - Accesibilidad
+        - Documentación
+    validations:
+      required: true

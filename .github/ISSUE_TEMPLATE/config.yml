@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Reportar una vulnerabilidad
+    url: https://github.com/juandiegoc30/vps-calculator/security/advisories/new
+    about: Usa un aviso privado para problemas de seguridad.
