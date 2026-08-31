@@ -283,7 +283,6 @@ function calculate() {
   $("recommendedTitle").textContent = title;
   $("recommendationText").textContent = recommendation;
   $("shortRequest").textContent = `VPS con ${cpu} vCPU, ${ram} GB RAM y ${storage} GB NVMe.`;
-  $("nimboFinalRecommendation").textContent = `Recomiendo ${cpu} vCPU, ${ram} GB RAM y ${storage} GB NVMe.`;
   latestRecommendation = { cpu, ram, storage };
 
   // Lectura en vivo del dock: el resultado responde mientras se contesta
@@ -310,6 +309,21 @@ function calculate() {
 
   const specification = buildSpecification({ project, cpu, ram, storage, bandwidth, backupText });
   $("specification").textContent = specification;
+  const application = project.applicationName || "[nombre de la aplicación]";
+  const projectName = project.projectName || "[nombre del proyecto]";
+  const purpose = safeSentence(project.purpose) || "[propósito del proyecto].";
+  const recipientName = project.recipientName || project.recipientRole || "Área de Infraestructura Tecnológica";
+  $("printDocumentSubject").textContent = `${application} — Proyecto ${projectName}`;
+  $("printRecipientName").textContent = recipientName;
+  $("printRecipientRole").textContent = project.recipientName ? project.recipientRole : "";
+  $("printRequestText").textContent = `Solicito la asignación de un servidor VPS para alojar la aplicación institucional “${application}”, correspondiente al proyecto “${projectName}”, cuya finalidad es ${purpose}`;
+  $("printRecommendationTitle").textContent = title;
+  $("printCpu").textContent = cpu;
+  $("printRam").textContent = ram;
+  $("printStorage").textContent = storage;
+  $("printBandwidth").textContent = bandwidth;
+  $("printBackup").textContent = `${backupText}, almacenados fuera del mismo VPS.`;
+  $("printRequester").textContent = project.requesterName || "Área solicitante";
   updateProjectState(project);
 
   return {
@@ -320,7 +334,7 @@ function calculate() {
   };
 }
 
-function setFeedback(message, target = "actionFeedback") {
+function setFeedback(message, target = "completionFeedback") {
   $(target).textContent = message;
   window.clearTimeout(setFeedback.timeout);
   setFeedback.timeout = window.setTimeout(() => { $(target).textContent = ""; }, 2600);
@@ -344,7 +358,7 @@ function resetCalculator() {
   $("applicationName").focus();
 }
 
-async function copySpecification(feedbackTarget = "actionFeedback") {
+async function copySpecification(feedbackTarget = "completionFeedback") {
   const text = $("specification").textContent;
   try {
     await navigator.clipboard.writeText(text);
@@ -678,12 +692,7 @@ function nimboTips() {
     [
       "Completa solo los nombres necesarios; la configuración técnica ya está incluida.",
       "Puedes dejar el cargo institucional propuesto o reemplazarlo.",
-      "La siguiente pantalla muestra exactamente lo que vas a entregar."
-    ],
-    [
-      `Recomendación final: ${latestRecommendation.cpu} vCPU, ${latestRecommendation.ram} GB RAM y ${latestRecommendation.storage} GB NVMe.`,
-      "Copia el texto para correo, imprime un PDF o descarga los datos del cálculo.",
-      "Revisa destinatario, proyecto y propósito antes de compartir la solicitud."
+      "Al finalizar, la carta quedará bloqueada y podrás copiarla o guardarla como PDF."
     ]
   ];
 }
@@ -699,8 +708,7 @@ const nimboTargetSelectors = [
   ['[data-choice="availability"] .choice:nth-child(2)', '[data-choice="backupFrequency"] .choice:nth-child(2)', '[data-choice="backupFrequency"] .choice:nth-child(3)'],
   [".spec-metrics div:first-child", ".recap-row:nth-child(1)", ".recap-row:nth-child(3)"],
   [".scenario-card:nth-child(1)", ".scenario-card.is-recommended", ".scenario-card:nth-child(3)"],
-  ["#recipientName", "#recipientRole", "#requesterName"],
-  ["#btnCopy", ".letter-preview-card", "#btnPrint"]
+  ["#recipientName", "#recipientRole", "#requesterName"]
 ];
 
 // Las poses comunican intención: señalar = acción, pensar = decisión,
@@ -717,8 +725,7 @@ const nimboPoseByStep = [
   ["thinking", "pointing", "reading"],
   ["reading", "thinking", "casting"],
   ["thinking", "reading", "casting"],
-  ["pointing", "thinking", "reading"],
-  ["celebrating", "reading", "guide"]
+  ["pointing", "thinking", "reading"]
 ];
 
 function nimboTarget(index = nimboTipIndex) {
@@ -736,7 +743,7 @@ function visualTarget(element) {
   if (typeof element.matches === "function" && element.matches("input, textarea, select")) {
     return element;
   }
-  return element.closest(".choice, .switch, .field, .stepper-input, .recap-row, .scenario-card, .spec-metrics div, .spec-item, .letter-preview-card") ||
+  return element.closest(".choice, .switch, .field, .stepper-input, .recap-row, .scenario-card, .spec-metrics div, .spec-item") ||
     (element.classList ? element : null);
 }
 
@@ -859,7 +866,7 @@ function playNimboSequence(frames, delays, returnPose = "guide", resumeAmbient =
 }
 
 function scheduleNimboAmbient(delay = NIMBO_AMBIENT_DELAY) {
-  if (!nimboCanAutoplay() || currentStep === lastStep) return;
+  if (!nimboCanAutoplay()) return;
   if (nimboAmbientTimer) window.clearTimeout(nimboAmbientTimer);
   nimboAmbientTimer = scheduleNimbo(() => {
     nimboAmbientTimer = null;
@@ -877,7 +884,7 @@ function acknowledgeNimbo(pose = "proud") {
 
 function toggleNimboSide(forceSide = null) {
   const guide = $("nimboGuide");
-  if (!nimboCanAutoplay() || Number(window.innerWidth || 0) < 1280 || currentStep === lastStep) return;
+  if (!nimboCanAutoplay() || Number(window.innerWidth || 0) < 1280) return;
   dismissNimbo(false);
   const nextSide = forceSide || (guide.dataset.side === "left" ? "right" : "left");
   guide.classList.add("is-traveling");
@@ -891,13 +898,13 @@ function toggleNimboSide(forceSide = null) {
 }
 
 function scheduleNimboSide(delay = NIMBO_SIDE_DELAY) {
-  if (!nimboCanAutoplay() || currentStep === lastStep) return;
+  if (!nimboCanAutoplay()) return;
   if (nimboSideTimer) window.clearTimeout(nimboSideTimer);
   nimboSideTimer = scheduleNimbo(() => toggleNimboSide(), delay);
 }
 
 function scheduleNimboAdvice(delay = NIMBO_ADVICE_DELAY) {
-  if (!nimboCanAutoplay() || nimboIdleAdviceShown || currentStep === lastStep) return;
+  if (!nimboCanAutoplay() || nimboIdleAdviceShown) return;
   if (nimboAdviceTimer) window.clearTimeout(nimboAdviceTimer);
   nimboAdviceTimer = scheduleNimbo(() => {
     nimboAdviceTimer = null;
@@ -920,7 +927,7 @@ function dismissNimbo(completed = false) {
   if (nimboHighlightTarget) nimboHighlightTarget.classList.remove("nimbo-highlight");
   nimboHighlightTarget = null;
   $("btnNimboTip").textContent = completed ? "Volver a empezar" : "Otro consejo";
-  if (completed) setNimboPose(currentStep === lastStep ? "celebrating" : "guide");
+  if (completed) setNimboPose("guide");
 }
 
 function nimboSpeak(text, target = null, pose = null) {
@@ -1186,8 +1193,6 @@ function init() {
   });
 
   $("btnReset").addEventListener("click", resetCalculator);
-  $("btnPrint").addEventListener("click", () => window.print());
-  $("btnCopy").addEventListener("click", () => copySpecification());
   $("btnFinish").addEventListener("click", openFinishDialog);
   $("btnCancelFinish").addEventListener("click", () => {
     closeFinishDialog();

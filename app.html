@@ -510,7 +510,7 @@
 
         <div class="step-head">
           <h1>Completa los datos de la carta</h1>
-          <p>Define quién la recibe y quién la solicita. La vista final se prepara en el siguiente paso.</p>
+          <p>Define quién la recibe y quién la solicita. Al finalizar podrás copiarla o guardarla como PDF.</p>
         </div>
 
         <div class="letter-form-layout no-print">
@@ -531,57 +531,8 @@
         </div>
       </fieldset>
 
-      <fieldset class="step step-letter step-letter-preview" data-section="7" data-title="La carta" hidden>
-        <legend class="sr-only">Paso 7 de 7: vista previa de la carta</legend>
-
-        <div class="step-head">
-          <h1>Tu solicitud está lista</h1>
-          <p>Revísala y elige cómo llevarla al área de infraestructura.</p>
-        </div>
-
-        <div class="letter-preview-layout letter-final-grid">
-          <section class="panel letter-action-card no-print" aria-labelledby="deliveryTitle">
-            <div class="letter-action-visual" aria-label="Nimbo presenta la recomendación final">
-              <p id="nimboFinalRecommendation" class="nimbo-final-speech">Recomiendo 4 vCPU, 8 GB RAM y 200 GB NVMe.</p>
-              <span class="nimbo-card-character" role="img">
-                <img class="nimbo-card-animation" src="./assets/images/nimbo-celebrating.gif" width="720" height="820" alt="" />
-                <img class="nimbo-card-static" src="./assets/images/nimbo-proud.webp" width="1199" height="1312" alt="" />
-              </span>
-            </div>
-            <div class="letter-toolbar-copy">
-              <span class="eyebrow">Entrega</span>
-              <h2 id="deliveryTitle">Llévate la solicitud</h2>
-              <p>Ya incluye la configuración calculada y los datos de tu proyecto.</p>
-            </div>
-            <div class="actions">
-              <button id="btnCopy" class="btn btn-secondary" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Copiar la carta
-              </button>
-              <button id="btnPrint" class="btn btn-secondary" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
-                Imprimir o guardar PDF
-              </button>
-            </div>
-            <p id="actionFeedback" class="feedback" role="status"></p>
-          </section>
-
-          <section class="letter-preview-card" aria-labelledby="previewTitle">
-            <div class="letter-preview-head no-print">
-              <div><span class="eyebrow">Vista previa</span><h2 id="previewTitle">Así se verá la carta</h2></div>
-              <span class="preview-scale">Vista 70%</span>
-            </div>
-            <div class="letter-mini-viewport">
-            <article class="letter" aria-label="Vista previa de la solicitud">
-              <pre id="specification"></pre>
-              <div class="letter-foot"><span>Nimbo VPS</span><span>Revisar antes de enviar</span></div>
-            </article>
-            </div>
-          </section>
-        </div>
-      </fieldset>
-
       <p id="projectCompleteness" class="sr-only" role="status"><span id="projectCount">0 de 3 datos</span></p>
+      <pre id="specification" class="sr-only no-print" aria-hidden="true"></pre>
     </div>
 
     <section id="completionScreen" class="completion-screen no-print" aria-labelledby="completionTitle" hidden>
@@ -620,6 +571,74 @@
         </div>
       </div>
     </section>
+
+    <article id="printLetter" class="print-letter" aria-label="Carta de solicitud de infraestructura">
+      <header class="print-letter-header">
+        <div class="print-letter-brand">
+          <img src="./assets/brand/nimbo-mark-128.png" width="36" height="36" alt="" />
+          <span><strong>Nimbo</strong> VPS</span>
+        </div>
+        <span>Solicitud de infraestructura</span>
+      </header>
+
+      <section class="print-letter-title">
+        <span>Solicitud formal</span>
+        <h1>Asignación de servidor VPS</h1>
+        <p id="printDocumentSubject">Aplicación institucional</p>
+      </section>
+
+      <address class="print-letter-recipient">
+        <span>Dirigida a</span>
+        <strong id="printRecipientName">Área de Infraestructura Tecnológica</strong>
+        <small id="printRecipientRole"></small>
+      </address>
+
+      <section class="print-letter-copy">
+        <p>Cordial saludo.</p>
+        <p id="printRequestText"></p>
+      </section>
+
+      <section class="print-letter-recommendation" aria-labelledby="printRecommendationTitle">
+        <div class="print-letter-section-head">
+          <span>Configuración recomendada</span>
+          <h2 id="printRecommendationTitle">Servidor equilibrado</h2>
+        </div>
+
+        <dl class="print-letter-metrics">
+          <div><dt>Procesador</dt><dd><strong id="printCpu">4</strong> vCPU</dd></div>
+          <div><dt>Memoria</dt><dd><strong id="printRam">8</strong> GB RAM</dd></div>
+          <div><dt>Almacenamiento</dt><dd><strong id="printStorage">200</strong> GB NVMe</dd></div>
+          <div><dt>Transferencia</dt><dd><strong id="printBandwidth">1</strong> TB / mes</dd></div>
+        </dl>
+
+        <dl class="print-letter-details">
+          <div><dt>Sistema operativo</dt><dd>Ubuntu Server 22.04 LTS</dd></div>
+          <div><dt>Base de datos</dt><dd>PostgreSQL</dd></div>
+          <div><dt>Dirección pública</dt><dd>1 IPv4 fija</dd></div>
+          <div><dt>Seguridad</dt><dd>TLS y firewall</dd></div>
+        </dl>
+      </section>
+
+      <section class="print-letter-includes">
+        <h2>Consideraciones incluidas</h2>
+        <ul>
+          <li>Acceso administrativo mediante SSH y compatibilidad con Nginx.</li>
+          <li id="printBackup">Respaldos externos diarios, almacenados fuera del mismo VPS.</li>
+          <li>Monitoreo básico de CPU, RAM, almacenamiento y disponibilidad.</li>
+        </ul>
+      </section>
+
+      <section class="print-letter-closing">
+        <p>La configuración contempla la aplicación, la base de datos y sus servicios relacionados en un único servidor, con margen razonable para crecimiento y estabilidad.</p>
+        <p>Agradezco la atención prestada y quedo atento a la asignación del recurso.</p>
+        <p class="print-letter-signature"><span>Cordialmente,</span><strong id="printRequester">Área solicitante</strong></p>
+      </section>
+
+      <footer class="print-letter-footer">
+        <span>Generado con Nimbo VPS</span>
+        <span>Validar con el área técnica antes del despliegue</span>
+      </footer>
+    </article>
 
     <aside id="nimboGuide" class="nimbo-guide no-print" data-pose="guide" data-side="right" aria-atomic="true">
       <div class="nimbo-bubble">

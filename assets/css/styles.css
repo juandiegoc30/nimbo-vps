@@ -690,73 +690,13 @@ html:has(body.app) { height: 100%; overflow: hidden; }
 .scenario-metrics dt { color: var(--ink-3); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .scenario-metrics dd { margin-top: 2px; font-size: 0.875rem; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-/* --- Pantalla final: la carta --- */
+/* --- Datos de la carta --- */
 
-.letter-form-layout, .letter-preview-layout { display: grid; gap: var(--s4); min-height: 0; }
-.letter-final-grid { grid-template-columns: 1fr; align-items: stretch; align-content: start; }
-
-/* Entrega: el paso siguiente del usuario, no un bloque mas de datos */
+.letter-form-layout { display: grid; gap: var(--s4); min-height: 0; }
 .letter-tools { display: grid; gap: var(--s5); }
 .letter-tools .recipients { margin-bottom: 0; }
-.letter-action-card {
-  display: grid; grid-template-columns: 1fr; grid-template-rows: auto auto auto auto;
-  height: 100%; align-items: start; align-content: start; gap: var(--s4); overflow: hidden;
-}
-.letter-action-visual {
-  position: relative; display: grid; place-items: end center; min-height: 236px;
-  padding: 58px var(--s4) 0; overflow: hidden;
-  border: 1px solid rgba(91, 67, 187, 0.14); border-radius: var(--r-md);
-  background: #f3f0ff;
-}
-.nimbo-final-speech {
-  position: absolute; top: var(--s3); left: var(--s3); right: var(--s3); z-index: 2;
-  padding: var(--s2) var(--s3);
-  border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface);
-  box-shadow: var(--sh-2); color: var(--ink-2); font-size: 0.75rem; font-weight: 650; line-height: 1.4;
-}
-.nimbo-final-speech::after {
-  content: ""; position: absolute; left: 36px; bottom: -6px; width: 10px; height: 10px;
-  border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2);
-  background: var(--surface); transform: rotate(45deg);
-}
-.nimbo-card-character {
-  position: relative; display: block; width: min(188px, 78%); aspect-ratio: 1199 / 1312; overflow: visible;
-}
-.nimbo-card-animation, .nimbo-card-static {
-  position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain;
-  filter: drop-shadow(0 14px 18px rgba(16, 29, 44, 0.18));
-}
-.nimbo-card-static { display: none; }
-.letter-toolbar-copy { display: grid; align-content: start; gap: var(--s1); }
-.letter-toolbar-copy h2 { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; }
-.letter-toolbar-copy p { max-width: 42ch; color: var(--ink-3); font-size: 0.8125rem; }
 .eyebrow { color: var(--accent-deep); font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; }
-.letter-action-card .actions { display: grid; grid-template-columns: 1fr; }
-.letter-action-card .actions .btn { width: 100%; }
-.letter-action-card .feedback { margin: 0; }
-
-.letter-preview-card {
-  display: grid; grid-template-rows: auto minmax(0, 1fr); min-width: 0; min-height: 0;
-  height: 100%;
-  padding: var(--s5); border: 1px solid var(--line); border-radius: var(--r-md);
-  background: var(--surface); box-shadow: var(--sh-1);
-}
-.letter-preview-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); margin-bottom: var(--s3); }
-.letter-preview-head h2 { font-size: 1rem; font-weight: 700; }
-.preview-scale {
-  padding: 4px var(--s2); border: 1px solid var(--line); border-radius: var(--r-pill);
-  color: var(--ink-3); background: var(--surface-2); font-size: 0.6875rem; font-weight: 650;
-}
-.letter-mini-viewport {
-  height: clamp(320px, 52vh, 520px); min-height: 0; overflow: auto; padding: var(--s4);
-  border-radius: var(--r-sm); background: var(--surface-sunk); overscroll-behavior: contain;
-}
-.letter-mini-viewport .letter {
-  width: 142.857%; min-height: 620px; padding: var(--s8);
-  transform: scale(0.7); transform-origin: top left;
-}
-.letter-mini-viewport .letter pre { font-size: 0.875rem; line-height: 1.52; }
-.letter-mini-viewport .letter-foot { margin-top: var(--s5); font-size: 0.625rem; }
+.print-letter { display: none; }
 
 /* --- Cierre del recorrido: estado terminal, sin navegación de regreso --- */
 
@@ -953,35 +893,11 @@ html:has(body.app) { height: 100%; overflow: hidden; }
 
 /* --- Acciones sobre la carta --- */
 
-.actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.actions .btn { min-height: 44px; padding: 0 var(--s5); font-size: 0.875rem; }
 .feedback { min-height: 22px; margin-top: var(--s3); color: var(--ok); font-size: 0.875rem; font-weight: 600; }
 .feedback:empty { display: none; }
 
 .recipients { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
 .recipients .field-label { font-size: 0.875rem; }
-
-/* --- Carta --- */
-
-.letter {
-  padding: var(--s12) var(--s12) var(--s8);
-  border-top: 4px solid var(--navy);
-  border-radius: 2px;
-  background: var(--surface);
-  box-shadow: var(--sh-2);
-}
-.letter pre {
-  margin: 0; color: #1e2b35;
-  font-family: var(--serif); font-size: 0.9375rem; line-height: 1.65;
-  white-space: pre-wrap; overflow-wrap: anywhere;
-}
-.letter-foot {
-  display: flex; justify-content: space-between; gap: var(--s4);
-  margin-top: var(--s10); padding-top: var(--s3); border-top: 1px solid var(--line);
-  color: var(--ink-3); font-family: var(--sans); font-size: 0.75rem; font-weight: 600;
-}
-.letter-foot span:first-child { color: var(--navy); }
-
 
 /* ==========================================================
    LANDING (index.html)
@@ -1601,7 +1517,7 @@ img.nimbo-still { display: none; }
     align-content: start;
   }
   .step-head, .result-grid, .result-detail,
-  .letter-form-layout, .letter-preview-layout { grid-column: 1 / -1; }
+  .letter-form-layout { grid-column: 1 / -1; }
   /* El contenedor del encabezado siempre usa el mismo límite que la
      pantalla; solo el texto conserva una medida legible. */
   .step-head { width: 100%; max-width: none; gap: var(--s2); }
@@ -1642,28 +1558,21 @@ img.nimbo-still { display: none; }
   .step[data-section="1"] > .step-head, .step[data-section="1"] > .group,
   .step[data-section="3"] > .step-head, .step[data-section="3"] > .group { width: 100%; }
 
-  /* Resultado y carta son espacios de trabajo, no documentos largos.
-     Sus encabezados permanecen visibles y solo scrollea el panel que crece. */
-  /* Solo las pantallas altas (resumen del resultado y vista previa de la carta)
-     usan el modo espacio-de-trabajo con scroll interno. La comparación y los
-     datos de la carta son cortas y se centran como los demás pasos. */
-  .canvas:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])),
-  .canvas:has(.step-letter-preview:not([hidden])) { overflow: hidden; }
-  .canvas-inner:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])),
-  .canvas-inner:has(.step-letter-preview:not([hidden])) {
+  /* El resumen de Resultado se comporta como espacio de trabajo y mantiene
+     la ficha técnica dentro del viewport. Las demás pantallas son breves. */
+  .canvas:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])) { overflow: hidden; }
+  .canvas-inner:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])) {
     height: 100%; min-height: 0;
   }
-  .step[data-section="6"]:not(.step-result-detail), .step-letter-preview {
+  .step[data-section="6"]:not(.step-result-detail) {
     height: 100%; min-height: 0; overflow: hidden;
     grid-template-rows: auto minmax(0, 1fr);
   }
-  .step[data-section="6"]:not(.step-result-detail) .result-grid,
-  .step-letter-preview .letter-preview-layout {
+  .step[data-section="6"]:not(.step-result-detail) .result-grid {
     min-height: 0; overflow: hidden; align-self: stretch;
   }
   .step[data-section="6"]:not(.step-result-detail) .result-grid { align-items: stretch; }
-  .step[data-section="6"]:not(.step-result-detail) .spec-shell,
-  .step-letter-preview .letter-mini-viewport {
+  .step[data-section="6"]:not(.step-result-detail) .spec-shell {
     min-height: 0; overflow-y: auto; overscroll-behavior: contain;
     scrollbar-gutter: stable; scroll-padding-block: var(--s4);
   }
@@ -1672,19 +1581,10 @@ img.nimbo-still { display: none; }
     min-height: 0; overflow: visible; scrollbar-gutter: auto; align-content: start;
   }
   .scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .letter-final-grid { grid-template-columns: minmax(440px, 0.9fr) minmax(0, 1.1fr); align-items: stretch; }
-  .letter-action-card {
-    grid-template-columns: minmax(170px, 0.76fr) minmax(216px, 1.24fr);
-    grid-template-rows: auto auto auto; align-items: center;
-  }
-  .letter-action-visual { grid-column: 1; grid-row: 1 / span 3; align-self: stretch; min-height: 340px; }
-  .letter-toolbar-copy, .letter-action-card .actions, .letter-action-card .feedback { grid-column: 2; }
-  .nimbo-card-character { width: min(224px, 94%); }
   /* Cuatro bloques resumen todo sin empujar las acciones fuera del viewport. */
   .recap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .canvas-inner { align-content: safe center; }
-  .canvas-inner:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])),
-  .canvas-inner:has(.step-letter-preview:not([hidden])) { align-content: start; }
+  .canvas-inner:has(.step[data-section="6"]:not(.step-result-detail):not([hidden])) { align-content: start; }
   .canvas-inner, .dock-inner { width: min(var(--content-w), 100% - var(--s12)); }
 }
 
@@ -1763,9 +1663,6 @@ img.nimbo-still { display: none; }
   .comparison-panel { padding: var(--s4); gap: var(--s3); }
   .scenario-card { padding: var(--s4); gap: var(--s2); }
   .scenario-card > p { min-height: 2.8em; }
-  .letter-action-card { gap: var(--s3) var(--s4); }
-  .letter-action-visual { min-height: 280px; padding-top: 52px; }
-  .nimbo-card-character { width: min(190px, 98%); }
 }
 
 /* ---------- Movil: la barra y el dock de una app, no de una pagina ---------- */
@@ -1812,8 +1709,6 @@ img.nimbo-still { display: none; }
   .finish-dialog { padding: var(--s6); }
   .finish-dialog-actions { flex-direction: column-reverse; }
   .finish-dialog-actions .btn { width: 100%; }
-  .letter { padding: var(--s8) var(--s5) var(--s6); }
-  .letter pre { font-size: 0.875rem; }
 }
 
 /* ---------- Resultado y landing en pantallas medianas ---------- */
@@ -1870,14 +1765,13 @@ img.nimbo-still { display: none; }
   .track-node[data-state="current"] .track-dot,
   .track-node[data-state="current"] .track-dot::after,
   .hero-nimbo-img, .translate-wand, .hero-nimbo .spark,
-  .nimbo-character, .nimbo-card-character,
-  .nimbo-animation, .nimbo-card-animation, .nimbo-guide,
+  .nimbo-character, .nimbo-animation, .nimbo-guide,
   .nimbo-guide.is-casting .nimbo-actor::before,
   .nimbo-guide.is-casting .nimbo-actor::after,
   .nimbo-highlight { animation: none; }
   .nimbo-guide { transition: opacity 1ms linear; transform: none !important; }
-  .nimbo-animation, .nimbo-card-animation { display: none; }
-  .nimbo-static, .nimbo-card-static { display: block; }
+  .nimbo-animation { display: none; }
+  .nimbo-static { display: block; }
   .nimbo-motion { display: none; }
   .hero-nimbo .nimbo-still, .cta-block .nimbo-still { display: block; }
   .completion-screen, .completion-card, .finish-dialog { animation: none; }
@@ -1893,29 +1787,112 @@ img.nimbo-still { display: none; }
    IMPRESIÓN: solo la carta
    ========================================================== */
 @media print {
-  @page { size: letter; margin: 14mm; }
-  html, body { background: #fff; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  @page { size: letter; margin: 0; }
+  html, body {
+    width: 215.9mm; height: auto; margin: 0; padding: 0;
+    overflow: visible; background: #fff;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+  }
   html:has(body.app) { height: auto; overflow: visible; }
   .app { display: block; height: auto; overflow: visible; }
-  .app.is-complete .canvas-inner { display: block; }
-  .completion-screen, .finish-dialog { display: none !important; }
-  .canvas { overflow: visible; }
-  .app-bar, .track, .dock, .step-head, .spec-shell, .panel,
-  .page-header, .page-footer, .no-print { display: none !important; }
-  .canvas-inner { width: 100%; padding: 0; }
-  .step { gap: 0; }
-  .letter-preview-layout, .letter-preview-card, .letter-mini-viewport {
-    display: block; max-height: none; overflow: visible;
-    padding: 0; border: 0; background: none; box-shadow: none;
+  .canvas { display: block; overflow: visible; }
+  .app-bar, .track, .dock, .canvas-inner, .completion-screen,
+  .finish-dialog, .page-header, .page-footer, .no-print { display: none !important; }
+
+  .print-letter {
+    display: flex !important; flex-direction: column;
+    gap: 5mm; box-sizing: border-box;
+    width: 215.9mm; min-height: 279.4mm;
+    margin: 0; padding: 11mm 15mm 9mm;
+    border-top: 4mm solid var(--accent);
+    color: var(--ink); background: #fff;
+    font-family: var(--sans); font-size: 9.5pt; line-height: 1.45;
   }
-  .letter {
-    min-height: 245mm; padding: 14mm 16mm 10mm;
-    border-top: 4px solid var(--navy); border-radius: 0;
-    background: #fff; box-shadow: none;
+  .print-letter-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 8mm;
+    padding-bottom: 4mm; border-bottom: 0.4mm solid var(--navy);
+    color: var(--ink-2); font-size: 8pt; font-weight: 700; text-transform: uppercase;
   }
-  .letter pre { color: #1e2b35; font-size: 10.5pt; line-height: 1.52; }
-  .letter-foot {
-    margin-top: 10mm; padding-top: 4mm;
-    border-top: 1px solid var(--line); color: var(--ink-3);
+  .print-letter-brand { display: flex; align-items: center; gap: 3mm; color: var(--navy); font-size: 11pt; text-transform: none; }
+  .print-letter-brand img { width: 9mm; height: 9mm; }
+  .print-letter-brand strong { color: var(--accent-deep); }
+
+  .print-letter-title { display: grid; gap: 1.5mm; }
+  .print-letter-title > span,
+  .print-letter-recipient > span,
+  .print-letter-section-head > span {
+    color: var(--accent-deep); font-size: 7.5pt; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .print-letter-title h1 {
+    margin: 0; color: var(--navy); font-family: var(--serif);
+    font-size: 24pt; font-weight: 500; line-height: 1.05;
+  }
+  .print-letter-title p { margin: 0; color: var(--ink-2); font-size: 10pt; font-weight: 650; }
+
+  .print-letter-recipient {
+    display: grid; gap: 0.7mm; margin: 0; padding: 3.5mm 4mm;
+    border-left: 1.2mm solid var(--accent); background: var(--surface-2);
+    color: var(--ink); font-style: normal;
+  }
+  .print-letter-recipient strong { font-size: 10pt; }
+  .print-letter-recipient small { color: var(--ink-3); font-size: 8.5pt; }
+  .print-letter-recipient small:empty { display: none; }
+
+  .print-letter-copy { display: grid; gap: 2.5mm; }
+  .print-letter-copy p, .print-letter-closing p { margin: 0; }
+
+  .print-letter-recommendation {
+    overflow: hidden; border: 0.4mm solid var(--navy); border-radius: 4mm;
+    break-inside: avoid;
+  }
+  .print-letter-section-head {
+    display: flex; align-items: end; justify-content: space-between; gap: 6mm;
+    padding: 3.5mm 4mm; color: #fff; background: var(--navy);
+  }
+  .print-letter-section-head > span { color: var(--accent); }
+  .print-letter-section-head h2 { margin: 0; color: #fff; font-size: 12pt; }
+  .print-letter-metrics {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0;
+    background: #f5f9df;
+  }
+  .print-letter-metrics div { padding: 4mm; border-bottom: 0.3mm solid var(--line); }
+  .print-letter-metrics div + div { border-left: 0.3mm solid var(--line); }
+  .print-letter-metrics dt,
+  .print-letter-details dt {
+    color: var(--ink-3); font-size: 7pt; font-weight: 750;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .print-letter-metrics dd { margin: 1mm 0 0; white-space: nowrap; font-size: 8.5pt; }
+  .print-letter-metrics strong { color: var(--navy); font-family: var(--serif); font-size: 19pt; font-weight: 500; }
+  .print-letter-details { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+  .print-letter-details div { display: grid; gap: 1mm; padding: 3mm 4mm; }
+  .print-letter-details div + div { border-left: 0.3mm solid var(--line); }
+  .print-letter-details dd { margin: 0; font-size: 8.5pt; font-weight: 700; }
+
+  .print-letter-includes { break-inside: avoid; }
+  .print-letter-includes h2 { margin: 0 0 2mm; color: var(--navy); font-size: 10pt; }
+  .print-letter-includes ul {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3mm; margin: 0; padding: 0; list-style: none;
+  }
+  .print-letter-includes li {
+    position: relative; padding: 3mm 3mm 3mm 7mm;
+    border: 0.3mm solid var(--line); border-radius: 2.5mm;
+    color: var(--ink-2); font-size: 8pt;
+  }
+  .print-letter-includes li::before {
+    content: "✓"; position: absolute; left: 2.5mm; top: 2.8mm;
+    color: var(--accent-deep); font-weight: 800;
+  }
+
+  .print-letter-closing { display: grid; align-content: end; gap: 2.5mm; }
+  .print-letter-signature { display: grid; gap: 1mm; margin-top: 1mm !important; }
+  .print-letter-signature span { color: var(--ink-3); font-size: 8pt; }
+  .print-letter-signature strong { color: var(--navy); }
+  .print-letter-footer {
+    display: flex; justify-content: space-between; gap: 8mm;
+    margin-top: auto; padding-top: 3mm; border-top: 0.3mm solid var(--line);
+    color: var(--ink-3); font-size: 7.5pt; font-weight: 650;
   }
 }
