@@ -24,7 +24,7 @@ Nimbo VPS guía a personas no técnicas por un cuestionario breve sobre usuarios
 
 - Formula preguntas en lenguaje cotidiano, sin exigir conocimientos de servidores.
 - Mantiene visible una estimación de recursos durante el recorrido.
-- Organiza el proceso en siete etapas y doce pantallas enfocadas.
+- Organiza el proceso en siete etapas y once pantallas enfocadas.
 - Explica cómo cada respuesta influye en la recomendación.
 - Compara un escenario mínimo, el recomendado y otro preparado para crecer.
 - Genera una solicitud formal que se puede copiar, imprimir o guardar como PDF conservando su formato visual.

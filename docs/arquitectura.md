@@ -29,7 +29,7 @@ resumen explicado · escenarios · carta imprimible
 
 `app.js` mantiene tres estados principales:
 
-- `currentStep`: pantalla visible dentro de las doce pantallas.
+- `currentStep`: pantalla visible dentro de las once pantallas.
 - `furthestStep`: límite de navegación habilitado en la pista de siete etapas.
 - `wizardCompleted`: estado terminal que impide editar o volver a pasos anteriores.
 

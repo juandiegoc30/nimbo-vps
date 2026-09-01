@@ -35,7 +35,7 @@ const VIEWPORTS = [
   ["externa 1440p",     2560, 1440, "escritorio"],
 ];
 
-const PANTALLAS = 12;
+const PANTALLAS = 11;
 const siteRoot = path.resolve(process.env.SITE_ROOT || process.cwd());
 const url = pathToFileURL(path.join(siteRoot, "app.html")).href;
 const landingUrl = pathToFileURL(path.join(siteRoot, "index.html")).href;
@@ -221,7 +221,7 @@ for (const [name, width, height] of [["móvil", 375, 667], ["escritorio", 1366, 
   await page.getByLabel(/Nombre de la aplicación/).fill("Portal institucional");
   await page.getByLabel(/Nombre del proyecto/).fill("Servicios 2026");
   await page.getByLabel(/Qué problema resuelve/).fill("Centralizar solicitudes.");
-  await page.evaluate(() => showStep(11));
+  await page.evaluate(() => showStep(10));
 
   const bad = [];
   const dockState = await page.evaluate(() => {
@@ -391,14 +391,10 @@ for (const [name, width, height] of [["móvil", 375, 667], ["escritorio", 1366, 
     const comparison = centerOffset(".step-result-detail .comparison-panel");
     showStep(10);
     const requestData = centerOffset(".step-letter-form .letter-tools");
-    showStep(11);
-    const action = document.querySelector(".letter-action-card").getBoundingClientRect();
-    const preview = document.querySelector(".letter-preview-card").getBoundingClientRect();
-    return { comparison, requestData, finalHeightDelta: Math.abs(action.height - preview.height) };
+    return { comparison, requestData };
   });
   if (centered.comparison > 2) bad.push(`Comparación queda ${centered.comparison.toFixed(1)}px fuera del centro`);
   if (centered.requestData > 2) bad.push(`Datos de solicitud quedan ${centered.requestData.toFixed(1)}px fuera del centro`);
-  if (centered.finalHeightDelta > 2) bad.push(`las tarjetas finales difieren ${centered.finalHeightDelta.toFixed(1)}px de alto`);
 
   failures += bad.length;
   console.log(`${bad.length ? "FALLA" : "ok   "} interacción dirigida      consejos diferidos, GIF continuo y centrado`);
@@ -446,6 +442,9 @@ for (const [name, width, height] of [["móvil", 375, 667], ["escritorio", 1366, 
   await page.fill("#projectName", "Servicios 2026");
   await page.fill("#projectPurpose", "Centralizar tramites.");
   await page.evaluate((n) => showStep(n - 1), PANTALLAS);
+  await page.getByRole("button", { name: "Finalizar solicitud" }).click();
+  await page.getByRole("button", { name: "Sí, finalizar" }).click();
+  await page.getByRole("heading", { name: "Solicitud finalizada", level: 1 }).waitFor({ state: "visible" });
   await page.emulateMedia({ media: "print" });
 
   const impresion = await page.evaluate(() => {
@@ -456,32 +455,36 @@ for (const [name, width, height] of [["móvil", 375, 667], ["escritorio", 1366, 
       return el ? el.getBoundingClientRect().height > 0 : false;
     };
     return {
-      carta: visible(".letter"),
-      textoCarta: document.querySelector(".letter pre").textContent.trim().length,
-      borde: parseFloat(getComputedStyle(document.querySelector(".letter")).borderTopWidth),
-      padding: parseFloat(getComputedStyle(document.querySelector(".letter")).paddingTop),
-      pie: visible(".letter-foot"),
+      carta: visible(".print-letter"),
+      textoCarta: document.querySelector(".print-letter").textContent.trim().length,
+      borde: parseFloat(getComputedStyle(document.querySelector(".print-letter")).borderTopWidth),
+      padding: parseFloat(getComputedStyle(document.querySelector(".print-letter")).paddingTop),
+      pie: visible(".print-letter-footer"),
+      metricas: document.querySelectorAll(".print-letter-metrics > div").length,
+      detalles: document.querySelectorAll(".print-letter-details > div").length,
       colorExacto: [
         getComputedStyle(document.documentElement).printColorAdjust,
         getComputedStyle(document.documentElement).webkitPrintColorAdjust,
       ].includes("exact"),
-      // La carta vive en un <dialog>: si no se aplana, se imprime recortada
-      chrome: [".recipients", ".dock", ".app-bar", ".track", ".letter-side", ".panel"].filter(visible),
+      chrome: [".canvas-inner", ".completion-screen", ".dock", ".app-bar", ".track", ".panel"].filter(visible),
     };
   });
   const pdf = await page.pdf({ format: "Letter", printBackground: true });
+  const paginas = (pdf.toString("latin1").match(/\/Type\s*\/Page\b/g) || []).length;
 
   const bad = [];
   if (!impresion.carta) bad.push("la carta no se imprime");
   if (impresion.textoCarta < 400) bad.push(`la carta impresa solo tiene ${impresion.textoCarta} caracteres`);
-  if (impresion.borde < 4 || impresion.padding < 20 || !impresion.pie || !impresion.colorExacto) {
+  if (impresion.borde < 10 || impresion.padding < 20 || !impresion.pie || !impresion.colorExacto ||
+      impresion.metricas !== 4 || impresion.detalles !== 4) {
     bad.push("la impresión perdió el formato visual de la carta");
   }
   if (pdf.subarray(0, 4).toString("ascii") !== "%PDF" || pdf.length < 10_000) bad.push("el navegador no generó un PDF válido");
+  if (paginas !== 1) bad.push(`la carta ocupa ${paginas} páginas en vez de una`);
   if (impresion.chrome.length) bad.push(`se imprime chrome que no deberia: ${impresion.chrome.join(", ")}`);
 
   failures += bad.length;
-  console.log(`${bad.length ? "FALLA" : "ok   "} impresion               carta maquetada y PDF válido, ${impresion.textoCarta} caracteres`);
+  console.log(`${bad.length ? "FALLA" : "ok   "} impresion               carta maquetada en ${paginas} página, ${impresion.textoCarta} caracteres`);
   bad.forEach((b) => console.log(`         -> ${b}`));
   await page.close();
 }

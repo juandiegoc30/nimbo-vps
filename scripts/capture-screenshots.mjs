@@ -50,7 +50,7 @@ await capture(app, "funciones.png");
 await app.evaluate(() => showStep(8));
 await capture(app, "resultado.png");
 
-await app.evaluate(() => showStep(11));
+await app.evaluate(() => showStep(10));
 await app.getByRole("button", { name: "Finalizar solicitud" }).click();
 await app.getByRole("button", { name: "Sí, finalizar" }).click();
 await app.getByRole("heading", { name: "Solicitud finalizada", level: 1 }).waitFor({ state: "visible" });

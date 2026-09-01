@@ -262,9 +262,10 @@ assert.equal(elements.liveCpu.textContent, initial.recommendation.cpu);
 assert.equal(elements.liveRam.textContent, initial.recommendation.ram);
 assert.equal(elements.liveDisk.textContent, initial.recommendation.storage);
 assert.equal(elements.cpuResult.textContent, initial.recommendation.cpu);
-assert.match(elements.nimboFinalRecommendation.textContent,
-  new RegExp(`${initial.recommendation.cpu} vCPU.*${initial.recommendation.ram} GB RAM.*${initial.recommendation.storage} GB NVMe`),
-  "la tarjeta final de Nimbo debe mostrar la recomendación calculada");
+assert.equal(elements.printCpu.textContent, initial.recommendation.cpu);
+assert.equal(elements.printRam.textContent, initial.recommendation.ram);
+assert.equal(elements.printStorage.textContent, initial.recommendation.storage,
+  "la carta imprimible debe usar la recomendación calculada");
 
 /* ================= Carta ================= */
 
@@ -350,7 +351,7 @@ vm.runInContext("showStep(0)", context);
 
 // Mas pantallas que etapas: el cuestionario avanza de pantalla en
 // pantalla pero el indicador muestra las siete etapas.
-assert.equal(wizardSteps.length, 12, "deberia haber 12 pantallas");
+assert.equal(wizardSteps.length, 11, "deberia haber 11 pantallas sin una vista previa duplicada");
 assert.equal(new Set(screens.map((s) => s.section)).size, 7, "deberia haber 7 etapas");
 assert.equal(elements.stepper.children.length, 7, "el indicador muestra etapas, no pantallas");
 assert.ok(elements.stepper.children.every((node) =>
@@ -383,8 +384,10 @@ assert.match(css, /\.step\[data-section="3"\] \.step-head p \{[^}]*white-space:\
   "la explicación de Funciones debe conservar una línea en escritorio");
 assert.equal((html.match(/class="spec-item"/g) || []).length, 4,
   "la ficha técnica debe mostrar cada título con su valor debajo");
-assert.match(html, /class="panel letter-action-card/, "La carta debe separar las acciones en una tarjeta");
-assert.match(html, /class="letter-preview-card"/, "La carta debe tener una tarjeta de vista previa reducida");
+assert.doesNotMatch(html, /Tu solicitud está lista|letter-preview-card|letter-action-card/,
+  "el wizard no debe repetir la entrega antes de la pantalla de cierre");
+assert.match(html, /id="printLetter"[\s\S]*?Configuración recomendada[\s\S]*?Consideraciones incluidas/,
+  "la salida de impresión debe tener estructura documental y no ser un bloque de texto plano");
 assert.match(html, /id="btnNimboTip"/, "Nimbo debe permitir recorrer consejos");
 assert.match(css, /@keyframes nimbo-talk/, "Nimbo debe mover la boca al hablar");
 assert.match(css, /@keyframes nimbo-point/, "Nimbo debe señalar el control activo");
@@ -493,15 +496,11 @@ assert.equal(elements.readout.hidden, true, "Resultado reemplaza la lectura del 
 vm.runInContext("showStep(9)", context);
 assert.equal(elements.btnNextLabel.textContent, "Siguiente", "la comparación conserva la misma acción");
 vm.runInContext("showStep(10)", context);
-assert.equal(elements.btnNextLabel.textContent, "Siguiente", "La carta conserva la misma acción");
-vm.runInContext("showStep(11)", context);
-// En la ultima pantalla se oculta Siguiente y la lectura en vivo cede al panel
+// Datos de la carta es la última pantalla: Finalizar sustituye a Siguiente.
 assert.equal(elements.btnNext.hidden, true);
 assert.equal(elements.readout.hidden, true);
-assert.equal(elements.nimboGuide.dataset.screen, "11",
-  "el asistente flotante cede el cierre al personaje integrado en la tarjeta final");
-assert.match(elements.nimboFinalRecommendation.textContent, /Recomiendo.*vCPU.*GB RAM.*GB NVMe/i,
-  "Nimbo debe cerrar el recorrido recomendando las especificaciones en la tarjeta final");
+assert.equal(elements.btnFinish.hidden, false);
+assert.equal(elements.nimboGuide.dataset.screen, "10");
 
 // showStep no se sale del rango
 vm.runInContext("showStep(99)", context);
@@ -576,7 +575,7 @@ assert.match(html, /id="completionScreen"[\s\S]*?Solicitud finalizada/,
   "el wizard debe tener un estado terminal inequívoco");
 
 assert.equal(elements.btnFinish.hidden, true, "Finalizar no debe aparecer antes de la última pantalla");
-vm.runInContext("showStep(11)", context);
+vm.runInContext("showStep(10)", context);
 assert.equal(elements.btnFinish.hidden, false, "Finalizar debe sustituir a Siguiente en la última pantalla");
 assert.equal(elements.btnNext.hidden, true, "Siguiente no debe competir con la acción final");
 elements.btnFinish.dispatch("click");
