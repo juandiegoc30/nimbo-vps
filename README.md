@@ -9,16 +9,22 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/juandiegoc30/vps-calculator/actions/workflows/ci.yml"><img alt="Integración continua" src="https://github.com/juandiegoc30/vps-calculator/actions/workflows/ci.yml/badge.svg" /></a>
-  <a href="https://github.com/juandiegoc30/vps-calculator/actions/workflows/deploy-pages.yml"><img alt="GitHub Pages" src="https://github.com/juandiegoc30/vps-calculator/actions/workflows/deploy-pages.yml/badge.svg" /></a>
+  <a href="https://github.com/juandiegoc30/nimbo-vps/actions/workflows/ci.yml"><img alt="Integración continua" src="https://github.com/juandiegoc30/nimbo-vps/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://github.com/juandiegoc30/nimbo-vps/actions/workflows/deploy-pages.yml"><img alt="GitHub Pages" src="https://github.com/juandiegoc30/nimbo-vps/actions/workflows/deploy-pages.yml/badge.svg" /></a>
   <a href="LICENSE"><img alt="Licencia MIT" src="https://img.shields.io/badge/licencia-MIT-101d2c.svg" /></a>
 </p>
 
 Nimbo VPS guía a personas no técnicas por un cuestionario breve sobre usuarios, funciones, datos y continuidad. Con esas respuestas estima CPU, memoria, disco y transferencia, explica la recomendación y redacta una carta lista para el área de infraestructura.
 
-**Demo:** [juandiegoc30.github.io/vps-calculator](https://juandiegoc30.github.io/vps-calculator/)
+**Demo:** [juandiegoc30.github.io/nimbo-vps](https://juandiegoc30.github.io/nimbo-vps/)
 
 ![Landing de Nimbo VPS](docs/screenshots/landing.png)
+
+## Demostración
+
+El recorrido animado muestra la captura del proyecto, la selección de capacidad, la recomendación, la comparación de escenarios y el cierre de la solicitud.
+
+![Recorrido animado de Nimbo VPS](docs/media/nimbo-vps-demo.gif)
 
 ## Qué resuelve
 
@@ -34,9 +40,13 @@ Nimbo VPS guía a personas no técnicas por un cuestionario breve sobre usuarios
 
 ## Recorrido
 
-| Funciones | Resultado | Solicitud finalizada |
-| --- | --- | --- |
-| ![Selección de funciones](docs/screenshots/funciones.png) | ![Recomendación de servidor](docs/screenshots/resultado.png) | ![Cierre del wizard](docs/screenshots/solicitud-finalizada.png) |
+| Funciones | Información |
+| --- | --- |
+| ![Selección de funciones](docs/screenshots/funciones.png) | ![Peso y conservación de archivos](docs/screenshots/informacion.png) |
+| **Resultado** | **Comparación** |
+| ![Recomendación de servidor](docs/screenshots/resultado.png) | ![Comparación de escenarios](docs/screenshots/comparacion.png) |
+
+![Cierre del wizard](docs/screenshots/solicitud-finalizada.png)
 
 ## Tecnología
 
@@ -54,8 +64,8 @@ No hay backend, cookies, telemetría ni dependencias de ejecución. Playwright s
 Requisitos: Node.js 22 o posterior.
 
 ```bash
-git clone https://github.com/juandiegoc30/vps-calculator.git
-cd vps-calculator
+git clone https://github.com/juandiegoc30/nimbo-vps.git
+cd nimbo-vps
 npm ci
 npx playwright install chromium
 npm run ci
@@ -79,6 +89,7 @@ Abre `http://localhost:8080/` para la landing o `http://localhost:8080/app.html`
 | `npm run build` | Genera `dist/` con solo los archivos necesarios para producción. |
 | `npm run ci` | Ejecuta sintaxis, pruebas y build, igual que GitHub Actions. |
 | `npm run screenshots` | Regenera las capturas usadas por este README. |
+| `npm run demo:gif` | Regenera en macOS el recorrido animado del README con Playwright e ImageIO. |
 
 ## Estructura
 
@@ -93,8 +104,8 @@ Abre `http://localhost:8080/` para la landing o `http://localhost:8080/app.html`
 │   ├── js/app.js                 cálculo e interacción del wizard
 │   ├── js/landing.js             comportamiento de la landing
 │   └── vendor/tabler-icons/      iconos locales y licencia
-├── docs/                         arquitectura, método, pruebas y despliegue
-├── scripts/                      build, capturas y generación de recursos
+├── docs/                         arquitectura, método, pruebas y material visual
+├── scripts/                      build, capturas, GIF y generación de recursos
 ├── tests/                        pruebas de humo y layout
 └── .github/workflows/            integración y despliegue continuo
 ```

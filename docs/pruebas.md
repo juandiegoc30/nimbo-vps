@@ -57,4 +57,12 @@ npx playwright install --with-deps chromium
 npm run screenshots
 ```
 
-Revisa visualmente los cuatro PNG en `docs/screenshots/` antes de incluirlos en un commit. Las capturas se generan con movimiento reducido para que el resultado sea determinista.
+Revisa visualmente los seis PNG en `docs/screenshots/` antes de incluirlos en un commit. Las capturas se generan con movimiento reducido para que el resultado sea determinista.
+
+En macOS también se puede regenerar el recorrido animado del README:
+
+```bash
+npm run demo:gif
+```
+
+Este comando captura el flujo con Playwright y codifica `docs/media/nimbo-vps-demo.gif` mediante ImageIO, sin depender de servicios externos.
