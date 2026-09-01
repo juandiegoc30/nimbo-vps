@@ -17,10 +17,10 @@ Si una verificación falla, el despliegue no comienza.
 
 ## Configuración inicial del repositorio
 
-1. Publica el repositorio como `juandiegoc30/vps-calculator`.
+1. Publica el repositorio como `juandiegoc30/nimbo-vps`.
 2. En **Settings → Pages → Build and deployment**, selecciona **GitHub Actions** como fuente.
 3. En **Settings → Actions → General**, conserva los permisos predeterminados de lectura. El job de despliegue solicita de forma explícita `pages: write` e `id-token: write`.
-4. Envía `main`. La URL esperada es `https://juandiegoc30.github.io/vps-calculator/`.
+4. Envía `main`. La URL esperada es `https://juandiegoc30.github.io/nimbo-vps/`.
 
 No se requieren secretos ni variables de entorno.
 

@@ -6,7 +6,7 @@ La rama `main` y la versión publicada en GitHub Pages reciben correcciones de s
 
 ## Reportar una vulnerabilidad
 
-No publiques detalles sensibles en un issue. Usa un [aviso privado de seguridad](https://github.com/juandiegoc30/vps-calculator/security/advisories/new) e incluye:
+No publiques detalles sensibles en un issue. Usa un [aviso privado de seguridad](https://github.com/juandiegoc30/nimbo-vps/security/advisories/new) e incluye:
 
 - componente afectado;
 - pasos mínimos para reproducirlo;

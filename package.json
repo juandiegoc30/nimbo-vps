@@ -7,20 +7,21 @@
   "author": "Juan Diego Castellanos",
   "repository": {
     "type": "git",
-    "url": "https://github.com/juandiegoc30/vps-calculator.git"
+    "url": "https://github.com/juandiegoc30/nimbo-vps.git"
   },
-  "homepage": "https://juandiegoc30.github.io/vps-calculator/",
+  "homepage": "https://juandiegoc30.github.io/nimbo-vps/",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "build": "node scripts/build-site.mjs",
-    "check:syntax": "node --check assets/js/app.js && node --check assets/js/landing.js && node --check scripts/build-site.mjs && node --check scripts/capture-screenshots.mjs && node --check tests/smoke.js && node --check tests/layout.mjs",
+    "check:syntax": "node --check assets/js/app.js && node --check assets/js/landing.js && node --check scripts/build-site.mjs && node --check scripts/capture-screenshots.mjs && node --check scripts/capture-demo.mjs && node --check tests/smoke.js && node --check tests/layout.mjs",
     "test:smoke": "node tests/smoke.js",
     "test:layout": "node tests/layout.mjs",
     "test": "npm run test:smoke && npm run test:layout",
     "ci": "npm run check:syntax && npm run test:smoke && npm run build && SITE_ROOT=dist npm run test:layout",
-    "screenshots": "node scripts/capture-screenshots.mjs"
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "demo:gif": "node scripts/capture-demo.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

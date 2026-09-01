@@ -15,4 +15,4 @@ Los cambios relevantes de Nimbo VPS se documentan aquí. El proyecto sigue [Sema
 - Pruebas de lógica, layout, interacción, impresión y múltiples viewports.
 - Build de producción y CI/CD para GitHub Pages.
 
-[1.0.0]: https://github.com/juandiegoc30/vps-calculator/releases/tag/v1.0.0
+[1.0.0]: https://github.com/juandiegoc30/nimbo-vps/releases/tag/v1.0.0
