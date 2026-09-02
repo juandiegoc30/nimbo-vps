@@ -50,6 +50,17 @@ El recorrido animado muestra la captura del proyecto, la selección de capacidad
 
 ## Tecnología
 
+<p>
+  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" />
+  <img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?logo=css&logoColor=white" />
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=101d2c" />
+  <img alt="Node.js" src="https://img.shields.io/badge/Node.js-5FA04E?logo=nodedotjs&logoColor=white" />
+  <img alt="Playwright" src="https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white" />
+  <img alt="Tabler Icons" src="https://img.shields.io/badge/Tabler_Icons-066FD1?logo=tabler&logoColor=white" />
+  <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white" />
+  <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub_Pages-222222?logo=githubpages&logoColor=white" />
+</p>
+
 - HTML5 semántico.
 - CSS propio y responsive, sin framework.
 - JavaScript Vanilla.
