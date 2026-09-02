@@ -46,6 +46,10 @@ assert.match(landingHtml, /Se publica bajo la licencia MIT\./,
   "el footer debe indicar la licencia con una frase explícita");
 assert.match(landingHtml, /herramienta open source/i,
   "el footer debe indicar que el proyecto es open source");
+assert.doesNotMatch(landingHtml, /href="\.\/(?:app|index)\.html"/,
+  "la navegación pública no debe mostrar extensiones .html");
+assert.doesNotMatch(html, /href="\.\/index\.html"/,
+  "la aplicación debe volver a la ruta limpia de inicio");
 assert.match(license, /Copyright \(c\) 2026 Juan Diego Castellanos/,
   "la licencia debe identificar al titular");
 assert.match(css, /\.page-header \{[\s\S]*?position:\s*fixed;[\s\S]*?inset:\s*0 0 auto;/,

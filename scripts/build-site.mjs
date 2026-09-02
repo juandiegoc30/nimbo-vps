@@ -40,7 +40,13 @@ async function verifyDocument(relativePath) {
     .map((match) => match[1].slice(2));
 
   for (const reference of references) {
-    await stat(path.join(output, reference));
+    const target = path.join(output, reference);
+    try {
+      await stat(target);
+    } catch (error) {
+      if (error.code !== "ENOENT" || path.extname(reference)) throw error;
+      await stat(`${target}.html`);
+    }
   }
 }
 
