@@ -1535,7 +1535,7 @@ img.nimbo-still { display: none; }
   /* Dos columnas cuando la ventana todavía es estrecha; cuatro sólo
      cuando cada tarjeta conserva una medida cómoda. */
   .switches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .result-grid { grid-template-columns: minmax(500px, 1.05fr) minmax(0, 0.95fr); }
+  .result-grid { grid-template-columns: minmax(500px, 1fr) minmax(0, 1fr); }
 
   /* Las pantallas de revisión y datos breves se centran dentro del
      límite común, en vez de estirar poco contenido hasta los bordes. */
