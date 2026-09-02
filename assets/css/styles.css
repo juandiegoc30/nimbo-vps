@@ -1648,7 +1648,7 @@ img.nimbo-still { display: none; }
   .dock-inner { min-height: 64px; }
   .track { margin: var(--s3) auto var(--s2); }
   .step[data-section="6"] .panel { padding: var(--s4); }
-  .step[data-section="6"] .result-summary { padding-block: var(--s3); }
+  .step[data-section="6"] .result-summary { padding-block: var(--s2); }
   .step[data-section="6"] .recap-row { padding-block: var(--s2); }
   .step[data-section="6"] .panel-head { margin-bottom: var(--s2); }
   .step[data-section="6"] .spec-shell { padding: var(--s1); border-radius: var(--r-md); }
